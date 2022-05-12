@@ -1,0 +1,136 @@
+<ifmodule mod_rewrite.c>
+ 
+    <ifmodule mod_negotiation.c>
+        Options -MultiViews
+    </ifmodule>
+     
+    RewriteEngine On
+     
+    RewriteCond %{REQUEST_FILENAME} -d [OR]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ ^$1 [N]
+ 
+    RewriteCond %{REQUEST_URI} (\.\w+$) [NC]
+    RewriteRule ^(.*)$ public/$1 
+ 
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ server.php
+ 
+</ifmodule>
+<IfModule mod_expires.c>
+    ## Enable expiration control
+    ExpiresActive On
+
+    ## CSS and JS expiration: 1 week after request
+    ExpiresByType text/css "now plus 1 week"
+    ExpiresByType application/javascript "now plus 1 week"
+    ExpiresByType application/x-javascript "now plus 1 week"
+
+    ## Image files expiration: 1 month after request
+    ExpiresByType image/bmp "now plus 1 month"
+    ExpiresByType image/gif "now plus 1 month"
+    ExpiresByType image/jpeg "now plus 1 month"
+    ExpiresByType image/jp2 "now plus 1 month"
+    ExpiresByType image/pipeg "now plus 1 month"
+    ExpiresByType image/png "now plus 1 month"
+    ExpiresByType image/svg+xml "now plus 1 month"
+    ExpiresByType image/tiff "now plus 1 month"
+    ExpiresByType image/x-icon "now plus 1 month"
+    ExpiresByType image/ico "now plus 1 month"
+    ExpiresByType image/icon "now plus 1 month"
+    ExpiresByType text/ico "now plus 1 month"
+    ExpiresByType application/ico "now plus 1 month"
+    ExpiresByType image/vnd.wap.wbmp "now plus 1 month"
+
+    ## Font files expiration: 1 week after request
+    ExpiresByType application/x-font-ttf "now plus 1 week"
+    ExpiresByType application/x-font-opentype "now plus 1 week"
+    ExpiresByType application/x-font-woff "now plus 1 week"
+    ExpiresByType font/woff2 "now plus 1 week"
+    ExpiresByType image/svg+xml "now plus 1 week"
+
+    ## Audio files expiration: 1 month after request
+    ExpiresByType audio/ogg "now plus 1 month"
+    ExpiresByType application/ogg "now plus 1 month"
+    ExpiresByType audio/basic "now plus 1 month"
+    ExpiresByType audio/mid "now plus 1 month"
+    ExpiresByType audio/midi "now plus 1 month"
+    ExpiresByType audio/mpeg "now plus 1 month"
+    ExpiresByType audio/mp3 "now plus 1 month"
+    ExpiresByType audio/x-aiff "now plus 1 month"
+    ExpiresByType audio/x-mpegurl "now plus 1 month"
+    ExpiresByType audio/x-pn-realaudio "now plus 1 month"
+    ExpiresByType audio/x-wav "now plus 1 month"
+
+    ## Movie files expiration: 1 month after request
+    ExpiresByType application/x-shockwave-flash "now plus 1 month"
+    ExpiresByType x-world/x-vrml "now plus 1 month"
+    ExpiresByType video/x-msvideo "now plus 1 month"
+    ExpiresByType video/mpeg "now plus 1 month"
+    ExpiresByType video/mp4 "now plus 1 month"
+    ExpiresByType video/quicktime "now plus 1 month"
+    ExpiresByType video/x-la-asf "now plus 1 month"
+    ExpiresByType video/x-ms-asf "now plus 1 month"
+</IfModule>
+
+RewriteEngine on
+
+Redirect 301 https://www.certificadomanipuladoralimentos.es/curso/test/?idioma=1 https://www.certificadomanipuladoralimentos.es/curso/test/español/
+Redirect 301 https://www.certificadomanipuladoralimentos.es/resumen/?idioma=1 https://www.certificadomanipuladoralimentos.es/curso-de-manipulador-de-alimentos/
+Redirect 301 https://www.certificadomanipuladoralimentos.es/resumen/?idioma=2 https://www.certificadomanipuladoralimentos.es/catalan-manipulador-d-aliments/
+Redirect 301 https://www.certificadomanipuladoralimentos.es/resumen/?idioma=4 https://www.certificadomanipuladoralimentos.es/chino-manipulador-alimentos/
+
+RewriteRule "^admin(.*)$" "https://certificado-manipuladoralimentos.com/admin$1" [P]
+RewriteRule "^pago(.*)$" "https://certificado-manipuladoralimentos.com/pago$1" [P]
+RewriteRule "^css(.*)$" "https://certificado-manipuladoralimentos.com/css$1" [P]
+RewriteRule "^examen(.*)$" "https://certificado-manipuladoralimentos.com/examen$1" [P]
+RewriteRule "^fonts(.*)$" "https://certificado-manipuladoralimentos.com/fonts$1" [P]
+RewriteRule "^img(.*)$" "https://certificado-manipuladoralimentos.com/img$1" [P]
+RewriteRule "^javascript(.*)$" "https://certificado-manipuladoralimentos.com/javascript$1" [P]
+
+RewriteCond %{HTTP_HOST} ^certificadomanipuladoralimentos.es [NC]   
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteRule ^(.*)$ http://www.certificadomanipuladoralimentos.es/$1 [L,R=301]
+
+RewriteCond %{HTTPS} !=on
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^certificadomanipuladoralimentos\.es$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.certificadomanipuladoralimentos\.es$
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^resumen\/catalan$ "https\:\/\/www\.certificadomanipuladoralimentos\.es\/catalan\-manipulador\-d\-aliments\/" [R=301,L]
+RewriteCond %{HTTP_HOST} ^certificadomanipuladoralimentos\.es$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.certificadomanipuladoralimentos\.es$
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^resumen\/chino$ "https\:\/\/www\.certificadomanipuladoralimentos\.es\/chino\-manipulador\-alimentos\/" [R=301,L]
+
+
+RewriteCond %{HTTP_HOST} ^certificadomanipuladoralimentos\.es$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.certificadomanipuladoralimentos\.es$
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^curso\/test\/español "https\:\/\/www\.certificadomanipuladoralimentos\.es\/examen\/ver\/53b4bdb3924\/" [R=301,L]
+
+
+# RewriteCond %{HTTP_HOST} ^certificadomanipuladoralimentos\.es$ [OR]
+# RewriteCond %{HTTP_HOST} ^www\.certificadomanipuladoralimentos\.es$
+# RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+# RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+# RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+# RewriteRule ^resumen\/\?idioma=2$ "https\:\/\/www\.certificadomanipuladoralimentos\.es\/catalan\-manipulador\-d\-aliments\/" [R=301,L]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php56” package as the default “PHP” programming language.
+# php -- END cPanel-generated handler, do not edit
+
